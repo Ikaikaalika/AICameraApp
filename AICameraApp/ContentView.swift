@@ -6,6 +6,7 @@ struct ContentView: View {
     @State private var pickerSource: UIImagePickerController.SourceType = .camera
     @State private var originalImage: UIImage?
     @State private var restoredImage: UIImage?
+    private let cameraAvailable = UIImagePickerController.isSourceTypeAvailable(.camera)
     private let restorationModel = PhotoRestorationModel()
 
     var body: some View {
@@ -29,11 +30,13 @@ struct ContentView: View {
                 }
 
                 HStack {
-                    Button("Take Photo") {
-                        pickerSource = .camera
-                        showImagePicker.toggle()
+                    if cameraAvailable {
+                        Button("Take Photo") {
+                            pickerSource = .camera
+                            showImagePicker.toggle()
+                        }
+                        .padding()
                     }
-                    .padding()
 
                     Button("Choose Photo") {
                         pickerSource = .photoLibrary
@@ -54,6 +57,9 @@ struct ContentView: View {
             .navigationTitle("AI Photo Restorer")
             .sheet(isPresented: $showImagePicker) {
                 ImagePicker(image: $originalImage, sourceType: pickerSource)
+            }
+            .onChange(of: originalImage) { _ in
+                restoredImage = nil
             }
         }
     }

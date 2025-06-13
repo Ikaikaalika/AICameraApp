@@ -14,7 +14,7 @@ An iOS app that lets you capture old family photos and restore them on device us
 - A device capable of running Core ML models (e.g. iPhone with A12 Bionic or newer).
 
 ## Building
-1. Open `AICameraApp.xcodeproj` or create a new SwiftUI iOS project in Xcode and add the files inside the `AICameraApp` directory.
+1. Create a new SwiftUI iOS project in Xcode and add the files inside the `AICameraApp` directory.
 2. Add a compiled Core ML model named `PhotoRestoration.mlmodel` to the project. Xcode will produce a `.mlmodelc` compiled model that the app expects.
 3. Ensure the `Info.plist` contains camera and photo library usage descriptions.
 4. Build and run on a physical device.
