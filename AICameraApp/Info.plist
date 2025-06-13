@@ -14,7 +14,6 @@
     <string>LaunchScreen</string>
     <key>NSCameraUsageDescription</key>
     <string>We need access to the camera to capture photos.</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>We need access to your photo library to select photos.</string>
+main
 </dict>
 </plist>
