@@ -2,6 +2,8 @@ import SwiftUI
 import PhotosUI
 
 struct ContentView: View {
+    @State private var showCamera = false
+    @State private var showGallery = false
     @State private var showImagePicker = false
     @State private var pickerSource: UIImagePickerController.SourceType = .camera
     @State private var originalImage: UIImage?
@@ -45,12 +47,20 @@ struct ContentView: View {
                     if originalImage != nil {
                         Button("Restore Photo") {
                             if let original = originalImage {
-                                restoredImage = restorationModel.restore(image: original)
+                                if let result = restorationModel.restore(image: original) {
+                                    restoredImage = result
+                                    PhotoStorage.shared.save(image: result)
+                                }
                             }
                         }
                         .padding()
                     }
                 }
+
+                Button("View Gallery") {
+                    showGallery.toggle()
+                }
+                .padding(.top)
             }
             .navigationTitle("AI Photo Restorer")
             .sheet(isPresented: $showImagePicker) {
@@ -61,6 +71,10 @@ struct ContentView: View {
                     ShareSheet(activityItems: [image])
                 }
             }
+            .sheet(isPresented: $showGallery) {
+                GalleryView()
+            }
+
             .toolbar {
                 if restoredImage != nil {
                     ToolbarItemGroup(placement: .bottomBar) {
@@ -84,6 +98,7 @@ struct ContentView: View {
     private func saveRestoredImage() {
         if let image = restoredImage {
             UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+
         }
     }
 }
