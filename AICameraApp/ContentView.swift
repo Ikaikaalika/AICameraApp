@@ -5,6 +5,7 @@ struct ContentView: View {
     @State private var showCamera = false
     @State private var originalImage: UIImage?
     @State private var restoredImage: UIImage?
+    @State private var showShareSheet = false
     private let restorationModel = PhotoRestorationModel()
 
     var body: some View {
@@ -47,6 +48,34 @@ struct ContentView: View {
             .sheet(isPresented: $showCamera) {
                 ImagePicker(image: $originalImage)
             }
+            .sheet(isPresented: $showShareSheet) {
+                if let image = restoredImage {
+                    ShareSheet(activityItems: [image])
+                }
+            }
+            .toolbar {
+                if restoredImage != nil {
+                    ToolbarItemGroup(placement: .bottomBar) {
+                        Button {
+                            showShareSheet = true
+                        } label: {
+                            Label("Share", systemImage: "square.and.arrow.up")
+                        }
+
+                        Button {
+                            saveRestoredImage()
+                        } label: {
+                            Label("Save", systemImage: "square.and.arrow.down")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private func saveRestoredImage() {
+        if let image = restoredImage {
+            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         }
     }
 }
