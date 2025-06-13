@@ -4,6 +4,7 @@ An iOS app that lets you capture old family photos and restore them on device us
 
 ## Features
 - Capture photos using the device camera.
+- Select existing photos from the photo library.
 - Run a photo restoration model on the captured image.
 - Display the restored image alongside the original.
 
@@ -15,6 +16,7 @@ An iOS app that lets you capture old family photos and restore them on device us
 ## Building
 1. Open `AICameraApp.xcodeproj` or create a new SwiftUI iOS project in Xcode and add the files inside the `AICameraApp` directory.
 2. Add a compiled Core ML model named `PhotoRestoration.mlmodel` to the project. Xcode will produce a `.mlmodelc` compiled model that the app expects.
-3. Build and run on a physical device.
+3. Ensure the `Info.plist` contains camera and photo library usage descriptions.
+4. Build and run on a physical device.
 
 The sample `PhotoRestorationModel` class expects the model to take an image input and produce an image output. You can replace it with any Core ML model that performs image restoration.
