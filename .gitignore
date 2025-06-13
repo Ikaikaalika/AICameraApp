@@ -1,0 +1,14 @@
+# Xcode
+build/
+DerivedData/
+*.xcworkspace
+*.xcuserstate
+*.xcuserdata
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+*.ds_store
+.DS_Store
+
+# Core ML compiled models
+*.mlmodelc
