@@ -2,7 +2,8 @@ import SwiftUI
 import PhotosUI
 
 struct ContentView: View {
-    @State private var showCamera = false
+    @State private var showImagePicker = false
+    @State private var pickerSource: UIImagePickerController.SourceType = .camera
     @State private var originalImage: UIImage?
     @State private var restoredImage: UIImage?
     private let restorationModel = PhotoRestorationModel()
@@ -29,7 +30,14 @@ struct ContentView: View {
 
                 HStack {
                     Button("Take Photo") {
-                        showCamera.toggle()
+                        pickerSource = .camera
+                        showImagePicker.toggle()
+                    }
+                    .padding()
+
+                    Button("Choose Photo") {
+                        pickerSource = .photoLibrary
+                        showImagePicker.toggle()
                     }
                     .padding()
 
@@ -44,8 +52,8 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("AI Photo Restorer")
-            .sheet(isPresented: $showCamera) {
-                ImagePicker(image: $originalImage)
+            .sheet(isPresented: $showImagePicker) {
+                ImagePicker(image: $originalImage, sourceType: pickerSource)
             }
         }
     }
