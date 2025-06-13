@@ -17,6 +17,7 @@ class PhotoRestorationModel {
         guard let model = model else { return nil }
         guard let cgImage = image.cgImage else { return nil }
         let request = VNCoreMLRequest(model: model)
+        request.imageCropAndScaleOption = .scaleFit
         let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
         try? handler.perform([request])
 
